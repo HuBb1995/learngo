@@ -3,6 +3,9 @@ package main
 import "fmt"
 
 func lengthOfLongestSubString(str string) int {
+	//字符串很长时采用[]int记录lastOccurred,可采用pprof调优性能，
+	// go test -bench . -cpuprofile cpu.out
+	// go tool pprof cpu.out
 	lastOccurred := make(map[rune]int)
 	start := 0
 	maxLength := 0
