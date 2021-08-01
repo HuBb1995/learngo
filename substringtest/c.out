@@ -1,0 +1,9 @@
+mode: set
+learngo/substringtest/norepeatingsubstr.go:5.47,9.33 4 1
+learngo/substringtest/norepeatingsubstr.go:19.2,19.18 1 1
+learngo/substringtest/norepeatingsubstr.go:9.33,11.27 2 1
+learngo/substringtest/norepeatingsubstr.go:14.3,14.32 1 1
+learngo/substringtest/norepeatingsubstr.go:17.3,17.23 1 1
+learngo/substringtest/norepeatingsubstr.go:11.27,13.4 1 1
+learngo/substringtest/norepeatingsubstr.go:14.32,16.4 1 1
+learngo/substringtest/norepeatingsubstr.go:22.20,24.2 1 0
