@@ -9,7 +9,7 @@ func lengthOfLongestSubString(str string) int {
 	for i, ch := range []rune(str) {
 		lastI, ok := lastOccurred[ch]
 		if ok && lastI >= start {
-			start = lastI + 1 + 2
+			start = lastI + 1
 		}
 		if i-start+1 > maxLength {
 			maxLength = i - start + 1
