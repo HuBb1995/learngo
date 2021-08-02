@@ -4,6 +4,7 @@ import (
 	"learngo/filelistserver/filelist"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 )
 
@@ -48,4 +49,5 @@ type userError interface {
 func main() {
 	http.HandleFunc("/", errWrapper(filelist.Handler))
 	http.ListenAndServe(":8888", nil)
+
 }
