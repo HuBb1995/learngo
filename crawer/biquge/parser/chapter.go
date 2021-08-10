@@ -5,7 +5,6 @@ import (
 	"os"
 	"regexp"
 	"strings"
-	"time"
 )
 
 var introRe = regexp.MustCompile(`<div id="content">(.+?)</div>`)
@@ -30,7 +29,6 @@ var introRe = regexp.MustCompile(`<div id="content">(.+?)</div>`)
 //}
 
 func ParseChapter(contents []byte, name string) engine.ParseResult {
-	time.Sleep(time.Millisecond * 10)
 	matches := introRe.FindAllSubmatch(contents, -1)
 	result := engine.ParseResult{}
 	for _, m := range matches {
