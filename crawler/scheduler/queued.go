@@ -1,27 +1,27 @@
 package scheduler
 
-import "learngo/crawer/engine"
+import "learngo/crawler/engine"
 
 type QueuedScheduler struct {
-	RequestChan chan engine.Request
-	WorkerChan  chan chan engine.Request
+	requestChan chan engine.Request
+	workerChan  chan chan engine.Request
+}
+
+func (s *QueuedScheduler) WorkerChan() chan engine.Request {
+	return make(chan engine.Request)
 }
 
 func (s *QueuedScheduler) Submit(r engine.Request) {
-	s.RequestChan <- r
-}
-
-func (s *QueuedScheduler) ConfigureMasterWorkChan(r chan engine.Request) {
-	panic("implement me")
+	s.requestChan <- r
 }
 
 func (s *QueuedScheduler) WorkerReady(w chan engine.Request) {
-	s.WorkerChan <- w
+	s.workerChan <- w
 }
 
 func (s *QueuedScheduler) Run() {
-	s.RequestChan = make(chan engine.Request)
-	s.WorkerChan = make(chan chan engine.Request)
+	s.requestChan = make(chan engine.Request)
+	s.workerChan = make(chan chan engine.Request)
 	go func() {
 		var requestQ []engine.Request
 		var workerQ []chan engine.Request
@@ -33,9 +33,9 @@ func (s *QueuedScheduler) Run() {
 				activeWorker = workerQ[0]
 			}
 			select {
-			case r := <-s.RequestChan:
+			case r := <-s.requestChan:
 				requestQ = append(requestQ, r)
-			case w := <-s.WorkerChan:
+			case w := <-s.workerChan:
 				workerQ = append(workerQ, w)
 			case activeWorker <- activeRequest:
 				requestQ = requestQ[1:]

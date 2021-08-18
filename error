@@ -1,0 +1,2 @@
+####:docker启动后闪退，根据docker ps -a获得id，查看报错docker logs [id]：the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
+>>>解决方案:docker run -d -p 9200:9200 -e "discovery.type=single-node" elasticsearch:7.12.1

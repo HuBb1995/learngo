@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"time"
 )
 
 type Nums []int
@@ -24,4 +25,11 @@ func main() {
 
 	sort.Sort(Nums(arr))
 	fmt.Println(arr)
+
+	for _, a := range arr {
+		go func() {
+			fmt.Println(a)
+		}()
+	}
+	time.Sleep(time.Second)
 }
