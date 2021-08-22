@@ -8,12 +8,13 @@ import (
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 	"io"
+	"learngo/crawler_distributed/config"
 	"log"
 	"net/http"
 	"time"
 )
 
-var rateLimiter = time.Tick(10 * time.Millisecond)
+var rateLimiter = time.Tick(time.Millisecond / config.Qps)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter

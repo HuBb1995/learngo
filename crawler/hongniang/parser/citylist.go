@@ -2,6 +2,7 @@ package parser
 
 import (
 	"learngo/crawler/engine"
+	"learngo/crawler_distributed/config"
 	"regexp"
 )
 
@@ -12,8 +13,8 @@ func ParseCityList(contents []byte, _ string) (engine.ParseResult, error) {
 	result := engine.ParseResult{}
 	for _, m := range matches {
 		result.Requests = append(result.Requests, engine.Request{
-			Url:       string(m[1]),
-			ParseFunc: ParseCity,
+			Url:    string(m[1]),
+			Parser: engine.NewFuncParser(config.ParseCity, ParseCity),
 		})
 	}
 	return result, nil

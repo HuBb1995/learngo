@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func worker(r Request) (ParseResult, error) {
+func Worker(r Request) (ParseResult, error) {
 	var body []byte
 	var err error
 	times := 10
@@ -25,5 +25,5 @@ func worker(r Request) (ParseResult, error) {
 		log.Printf("Fetch error %s: %v\n", r.Url, err)
 		return ParseResult{}, err
 	}
-	return r.ParseFunc(body, r.Url)
+	return r.Parser.Parse(body, r.Url)
 }

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"learngo/crawler/engine"
 	"learngo/crawler/model"
+	"learngo/crawler_distributed/config"
 	"regexp"
 	"strings"
 )
@@ -16,7 +17,7 @@ var nameRe = regexp.MustCompile(`<div class="name nickname" >([^"]+)<`)
 
 var moreRe = regexp.MustCompile(`<a target="_blank" href="(/user/[^"]+)">`)
 
-func ParseProfile(contents []byte, url string) (engine.ParseResult, error) {
+func ParseProfile(contents []byte, url string, _ string) (engine.ParseResult, error) {
 	matches := profileRe.FindAllSubmatch(contents, -1)
 
 	if len(matches) == 0 {
@@ -47,8 +48,8 @@ func ParseProfile(contents []byte, url string) (engine.ParseResult, error) {
 	for _, m := range matches {
 		url = "http://www.hongniang.com" + string(m[1])
 		result.Requests = append(result.Requests, engine.Request{
-			Url:       url,
-			ParseFunc: ParseProfile,
+			Url:    url,
+			Parser: NewProfileParser(string(m[1])),
 		})
 	}
 
@@ -61,4 +62,22 @@ func extractString(contents []byte, re *regexp.Regexp) string {
 		return strings.Trim(string(match[1]), " ")
 	}
 	return ""
+}
+
+type ProfileParser struct {
+	userName string
+}
+
+func (p *ProfileParser) Parse(contents []byte, url string) (engine.ParseResult, error) {
+	return ParseProfile(contents, url, p.userName)
+}
+
+func (p *ProfileParser) Serialize() (name string, args interface{}) {
+	return config.ParseProfile, p.userName
+}
+
+func NewProfileParser(name string) *ProfileParser {
+	return &ProfileParser{
+		userName: name,
+	}
 }

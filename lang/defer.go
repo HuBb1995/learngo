@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"learngo/fib"
+	fib2 "learngo/lang/fib"
 	"os"
 )
 
@@ -20,7 +20,7 @@ func writeFile(fileName string) {
 
 	writer := bufio.NewWriter(file)
 	defer writer.Flush()
-	f := fib.Fibonacci()
+	f := fib2.Fibonacci()
 	for i := 0; i < 20; i++ {
 		fmt.Fprintln(writer, f())
 	}

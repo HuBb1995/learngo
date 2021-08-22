@@ -1,7 +1,7 @@
 package main
 
 import (
-	"learngo/filelistserver/filelist"
+	filelist2 "learngo/lang/filelistserver/filelist"
 	"log"
 	"net/http"
 	_ "net/http/pprof"
@@ -47,7 +47,7 @@ type userError interface {
 }
 
 func main() {
-	http.HandleFunc("/", errWrapper(filelist.Handler))
+	http.HandleFunc("/", errWrapper(filelist2.Handler))
 	http.ListenAndServe(":8888", nil)
 
 }
